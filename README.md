@@ -1,15 +1,15 @@
 # Magic-Numbers-Injection
-Inyecta los Magic Numbers de diferentes formatos de imagen a cualquier script.
+Injects the Magic Numbers of different image formats into any script so that it is recognized as an image during file uploads. Please note that different filters may be applied and the upload might not be allowed.
 ```bash
 git clone https://github.com/t0chka1312/Magic-Numbers-Injection.git
 cd Magic-Numbers-Injection
 ```
-Estos son los formatos aceptados:
+These are the accepted formats:
 ``` bash
-Uso: python3 magic_numbers.py <formato> <archivo_entrada> <archivo_salida>
-Ejemplo: python magic_numbers.py jpg shell.php shell.jpg
+Usage: python3 magic_numbers.py <format> <input_file> <output_file>
+Example: python magic_numbers.py jpg shell.php shell.jpg
 
-Formatos de imagen soportados:
+Supported image formats:
   - jpg
   - jpeg
   - png
@@ -29,7 +29,7 @@ Formatos de imagen soportados:
   - arw
 ```
 
-Sintaxis del script:
+Script syntax:
 ``` bash
-python3 magic_numbers.py <formato> <archivo_entrada> <archivo_salida>
+python3 magic_numbers.py <format> <input_file> <output_file>
 ```
