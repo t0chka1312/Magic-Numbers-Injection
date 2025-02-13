@@ -2,7 +2,7 @@
 import sys
 import os
 
-# Definiciones de colores ANSI
+# ANSI color codes
 RED     = "\033[31m"
 GREEN   = "\033[32m"
 YELLOW  = "\033[33m"
@@ -11,78 +11,78 @@ MAGENTA = "\033[35m"
 CYAN    = "\033[36m"
 RESET   = "\033[0m"
 
-# Magic numbers para diferentes formatos de imagen
+# Magic numbers for different image formats
 MAGIC_NUMBERS = {
     'jpg': b'\xFF\xD8\xFF\xE0',          # JPEG
-    'jpeg': b'\xFF\xD8\xFF\xE0',         # JPEG (alternativa)
+    'jpeg': b'\xFF\xD8\xFF\xE0',         # JPEG (alternative)
     'png': b'\x89PNG\r\n\x1a\n',         # PNG
     'gif': b'GIF89a',                    # GIF
     'bmp': b'BM',                        # BMP
-    'webp': b'RIFF\x00\x00\x00\x00WEBPVP8',  # WEBP (simplificado)
+    'webp': b'RIFF\x00\x00\x00\x00WEBPVP8',  # WEBP (simplified)
     'tiff': b'II*\x00',                  # TIFF (little-endian)
-    'tif': b'II*\x00',                   # TIFF (alternativa)
-    'ico': b'\x00\x00\x01\x00',           # ICO (icono)
+    'tif': b'II*\x00',                   # TIFF (alternative)
+    'ico': b'\x00\x00\x01\x00',           # ICO (icon)
     'psd': b'8BPS',                      # PSD (Photoshop)
-    'svg': b'<?xml',                     # SVG (texto XML)
-    'pdf': b'%PDF-',                     # PDF (no es una imagen, pero común)
-    'heic': b'\x00\x00\x00 ftypheic',     # HEIC (formato de imagen moderno)
-    'avif': b'\x00\x00\x00 ftypavif',     # AVIF (formato de imagen moderno)
-    'cr2': b'II*\x00\x10\x00\x00\x00CR',  # CR2 (RAW de Canon)
-    'nef': b'MM\x00\x2A',                # NEF (RAW de Nikon)
-    'arw': b'II*\x00\x08\x00\x00\x00',    # ARW (RAW de Sony)
+    'svg': b'<?xml',                     # SVG (XML text)
+    'pdf': b'%PDF-',                     # PDF (not an image, but common)
+    'heic': b'\x00\x00\x00 ftypheic',     # HEIC (modern image format)
+    'avif': b'\x00\x00\x00 ftypavif',     # AVIF (modern image format)
+    'cr2': b'II*\x00\x10\x00\x00\x00CR',  # CR2 (Canon RAW)
+    'nef': b'MM\x00\x2A',                # NEF (Nikon RAW)
+    'arw': b'II*\x00\x08\x00\x00\x00',    # ARW (Sony RAW)
 }
 
 def add_magic_numbers(image_format, input_file, output_file):
-    # Verificar si el formato es válido
+    # Check if the format is supported
     if image_format not in MAGIC_NUMBERS:
-        print(f"{RED}Formato no soportado: {image_format}{RESET}")
-        print("Formatos soportados: " + ", ".join(MAGIC_NUMBERS.keys()))
+        print(f"{RED}Unsupported format: {image_format}{RESET}")
+        print("Supported formats: " + ", ".join(MAGIC_NUMBERS.keys()))
         sys.exit(1)
 
-    # Obtener los magic numbers para el formato seleccionado
+    # Get the magic numbers for the selected format
     magic_numbers = MAGIC_NUMBERS[image_format]
 
-    # Construir rutas absolutas basadas en el directorio de trabajo actual
+    # Build absolute paths based on the current working directory
     input_path = os.path.abspath(input_file)
     output_path = os.path.abspath(output_file)
 
-    # Leer el contenido del archivo de entrada
+    # Read the content of the input file
     try:
         with open(input_path, 'rb') as f:
             file_content = f.read()
     except Exception as e:
-        print(f"{RED}Error al leer {input_path}: {e}{RESET}")
+        print(f"{RED}Error reading {input_path}: {e}{RESET}")
         sys.exit(1)
 
-    # Escribir el archivo de salida con los magic numbers al principio
+    # Write the output file with the magic numbers at the beginning
     try:
         with open(output_path, 'wb') as f:
             f.write(magic_numbers + file_content)
     except Exception as e:
-        print(f"{RED}Error al escribir {output_path}: {e}{RESET}")
+        print(f"{RED}Error writing {output_path}: {e}{RESET}")
         sys.exit(1)
 
-    print(f"{GREEN}Archivo generado: {output_path}{RESET}")
-    print(f"{CYAN}Magic numbers de {image_format} añadidos al principio del archivo.{RESET}")
+    print(f"{GREEN}File generated: {output_path}{RESET}")
+    print(f"{CYAN}Magic numbers for {image_format} added at the beginning of the file.{RESET}")
 
 def show_help():
     script_name = os.path.basename(sys.argv[0])
-    print(f"{YELLOW}Uso: python3 {script_name} <formato> <archivo_entrada> <archivo_salida>{RESET}")
-    print(f"{YELLOW}Ejemplo: python {script_name} jpg shell.php shell.jpg{RESET}")
-    print(f"\n{MAGENTA}Formatos de imagen soportados:{RESET}")
+    print(f"{YELLOW}Usage: python {script_name} <format> <input_file> <output_file>{RESET}")
+    print(f"{YELLOW}Example: python {script_name} jpg shell.php shell.jpg{RESET}")
+    print(f"\n{MAGENTA}Supported image formats:{RESET}")
     for fmt in MAGIC_NUMBERS.keys():
         print(f"  - {BLUE}{fmt}{RESET}")
     sys.exit(0)
 
 if __name__ == "__main__":
-    # Mostrar ayuda si no se proporcionan argumentos o se usa --help
+    # Show help if an incorrect number of arguments is provided or if --help is used
     if len(sys.argv) != 4 or sys.argv[1] == "--help":
         show_help()
 
-    # Obtener los argumentos
+    # Get the arguments
     image_format = sys.argv[1].lower()
     input_file   = sys.argv[2]
     output_file  = sys.argv[3]
 
-    # Ejecutar la función principal
+    # Execute the main function
     add_magic_numbers(image_format, input_file, output_file)
