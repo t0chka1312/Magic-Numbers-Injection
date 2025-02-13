@@ -1,8 +1,4 @@
 # Magic-Numbers-Injection
-Inyecta los Magic Numbers de cualquier formato de imagen a cualquier script.
-```python
-# Este es un ejemplo de código en Python
-def saludar():
-    print("Hola, mundo!")
-
-saludar()
+Inyecta los Magic Numbers de diferentes formatos de imagen a cualquier script.
+```bash
+git clone https://github.com/t0chka1312/Magic-Numbers-Injection.git
