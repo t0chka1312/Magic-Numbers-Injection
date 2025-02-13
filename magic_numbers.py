@@ -67,7 +67,7 @@ def add_magic_numbers(image_format, input_file, output_file):
 
 def show_help():
     script_name = os.path.basename(sys.argv[0])
-    print(f"{YELLOW}Uso: python {script_name} <formato> <archivo_entrada> <archivo_salida>{RESET}")
+    print(f"{YELLOW}Uso: python3 {script_name} <formato> <archivo_entrada> <archivo_salida>{RESET}")
     print(f"{YELLOW}Ejemplo: python {script_name} jpg shell.php shell.jpg{RESET}")
     print(f"\n{MAGENTA}Formatos de imagen soportados:{RESET}")
     for fmt in MAGIC_NUMBERS.keys():
